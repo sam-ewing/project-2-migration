@@ -1,6 +1,6 @@
-// Placeholder Coordinates
-var placeholder_lat = 31.763441
-var placeholder_long = -106.504839
+// Map Center Coords
+var map_center_lat = 31.763441
+var map_center_long = -106.504839
 
 // Create street tile layer  
 var border_street_layer = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
@@ -37,8 +37,8 @@ var map_base_maps = {
 
 
 var dashboard_map = L.map("map", {
-  // Placeholder point - El Paso
-  center: [placeholder_lat, placeholder_long],
+  // Center point - El Paso, Texas
+  center: [map_center_lat, map_center_long],
   zoom: 5,
   layers: [
     border_street_layer,
@@ -124,13 +124,13 @@ function sendIncidentsToLeaflet(migrant_data) {
       incident_yearCount[yearCode]++;
       
     
-      // console.log(`revised: ${data_index}`, data_record)
+      // Create incident marker and pop-up
       if (incident_location_tag) {
         
         var marker = L.marker([incident_coords[0], incident_coords[1]])
         marker.addTo(layers[yearCode])
         marker.bindPopup(
-          `<h2>${data_record.location_desc}</h2>
+          `<h2>${data_record.location_desc}*</h2>
           <h3 style="line-height: .5;">${data_record.date_reported}</h3>
           <hr/>
           <h3 style="line-height: .3;">Incident Summary</h3>
@@ -155,19 +155,14 @@ function sendIncidentsToLeaflet(migrant_data) {
             <li>Source URL: ${data_record.url_desc}</li>
             <li>Source Description: ${data_record.source_desc}</li>
           </ul>
+          <p>*The original dataset from which this data was retrieved was assembled from several sources of varying quality. Information regarding this incident might not be fully accurate or complete.</p>
           `
           )
-          
-          
         
         }
-
-      
-
+        
       }
       
-        
-          // <li>Source Rating: ${data_record.source_quality_code}</li>
       
     updateLegend(incident_yearCount)
 }
@@ -188,7 +183,6 @@ function updateLegend(count) {
 
 function sendBordersToLeaflet(border_data) {
 
-  
 
   // Border Organizer stores all data containing the same port ID
   var border_organizer = {}
@@ -383,15 +377,14 @@ function sendBordersToLeaflet(border_data) {
     var port_popup_total_empty_truck = port_info[18]
     var port_popup_total_containers = port_info[19]
    
-
+    // Circle Marker color selections
     var circleoptions = {
       fillColor: "green",
       color: "black"
     }
-  
+
     
-    
-  
+    // Create border port circle-marker and pop-up
     L.circleMarker([port_popup_coords[0], port_popup_coords[1]], circleoptions).bindPopup(
       `<h2 style="line-height: .5; text-align: center;">BORDER PORT</h2> 
       <h2 style="line-height: .5; text-align: center;">${port_popup_loc[0]}, ${port_popup_loc[1]}</h2>

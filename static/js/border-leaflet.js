@@ -1,10 +1,7 @@
-// Placeholder Coordinates
-var placeholder_lat = 31.763441
-var placeholder_long = -106.504839
+// Map Center Coords
+var map_center_lat = 31.763441
+var map_center_long = -106.504839
 
-
-  
-  
   // Create street tile layer  
   var border_street_layer = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -32,8 +29,8 @@ var placeholder_long = -106.504839
   // Creating Satellite Map for Border Crossings / Incidents
 
 var southern_border_map = L.map("map", {
-  // Placeholder point - El Paso
-  center: [placeholder_lat, placeholder_long],
+  // Center point - El Paso, Texas
+  center: [map_center_lat, map_center_long],
   zoom: 5,
   layers: [border_street_layer]
 });
@@ -57,11 +54,11 @@ d3.json(migrant_API_link, function(migrant_southern_data) {
       var incident_coords = [data_record.rev_incident_lat, data_record.rev_incident_lng]
       var incident_location_tag = data_record.incident_lat
       
-      
+      // Create incident marker and pop-up
       if (incident_location_tag) {
         incident_markers.addLayer(L.marker([incident_coords[0], incident_coords[1]])
         .bindPopup(
-          `<h2>${data_record.location_desc}</h2>
+          `<h2>${data_record.location_desc}*</h2>
           <h3 style="line-height: .5;">${data_record.date_reported}</h3>
           <hr/>
           <h3 style="line-height: .3;">Incident Summary</h3>
@@ -85,28 +82,15 @@ d3.json(migrant_API_link, function(migrant_southern_data) {
           <ul>
             <li>Source URL: ${data_record.url_desc}</li>
             <li>Source Description: ${data_record.source_desc}</li>
-            
-          </ul>`
+          </ul>
+          <p>*The original dataset from which this data was retrieved was assembled from several sources of varying quality. Information regarding this incident might not be fully accurate or complete.</p>
+          `
           ))}
-          // <li>Source Rating: ${data_record.source_quality_code}</li>
-        
-      
-            
-             // Draw line between port and incident
-            
-            // console.log("click")
-            
-            // var line_to_port = [
-            //   [incident_coords[0], incident_coords[1]],
-            //   [data_record.nearest_port_lat, data_record.nearest_port_lng]
-            // ];
-            // lineLayer = L.polyline(line_to_port, {
-            //   color: "black"
-            // }).addTo(southern_border_map);
 
           
           
       }
+    // Send all markers to the cluster group
     southern_border_map.addLayer(incident_markers);
     
     
@@ -316,14 +300,13 @@ d3.json(border_API_link, function(border_southern_data) {
     var port_popup_total_containers = port_info[19]
    
 
+    // Circle Marker color selections
     var circleoptions = {
       fillColor: "green",
       color: "black"
     }
   
-    
-    
-  
+    // Create border port circle-marker and pop-up
     L.circleMarker([port_popup_coords[0], port_popup_coords[1]], circleoptions).bindPopup(
       `<h2 style="line-height: .5; text-align: center;">BORDER PORT</h2> 
       <h2 style="line-height: .5; text-align: center;">${port_popup_loc[0]}, ${port_popup_loc[1]}</h2>
