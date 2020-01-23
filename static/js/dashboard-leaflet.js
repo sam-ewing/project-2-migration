@@ -169,12 +169,14 @@ function sendIncidentsToLeaflet(migrant_data) {
 
 function updateLegend(count) {
   document.querySelector(".map_legend").innerHTML = [
-    `<div style="background-color: darkslategray; color: white; padding-top: 1px; padding-left: 10px; padding-right: 10px; padding-bottom: 1px; border-radius: 10px;">
+    `<div style="background-color: darkslategray; color: white; text-align: center; padding-top: 1px; padding-left: 10px; padding-right: 10px; padding-bottom: 1px; border-radius: 10px;">
     <h4>2014 Incident Count: ${count.year_2014}</h4>
     <h4>2015 Incident Count: ${count.year_2015}</h4>
     <h4>2016 Incident Count: ${count.year_2016}</h4>
     <h4>2017 Incident Count: ${count.year_2017}</h4>
     <h4>2018 Incident Count: ${count.year_2018}</h4>
+    <hr/>
+    <h4>Total Incident Count: ${count.year_2014 + count.year_2015 + count.year_2016 + count.year_2017 + count.year_2018}</h4>
     </div>
     `
   ]
