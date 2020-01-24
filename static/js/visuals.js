@@ -70,29 +70,11 @@ d3.json(migrant_API_link, function(incident_data) {
     console.log("coords for port:", selected_port_coords)
 
   
-  //   // Create Migrant Graph
-  //   var migrant_graph_setup = {
-  //     x: VALUE NEEDED,
-  //     y: VALUE NEEDED,
-  //     text: VALUE NEEDED,
-  //     type: 'bar',
-  //     orientation: 'h'
-  //   }
 
-  //   var migrant_graph_data = [migrant_graph_setup]
-
-  //   var migrant_graph_layout = {
-  //     title: "TITLE NEEDED",
-  //     barmode: "grouped"
-  //   }
-
-
-  // Plotly.newPlot('migrant-graph-tag', migrant_graph_data, migrant_graph_layout);
-    
-    // dashboard_map.panTo(new L.LatLng(selected_port_coords[0], selected_port_coords[1]));
-    
   }
  
+  
+
   
 })
 
@@ -103,34 +85,15 @@ d3.json(migrant_API_link, function(incident_data) {
 
 })
 
+
+
+
 // JSON test file = '../../static/test-data/summary_crossings.json'
 var border_API_link = "https://migrant-crossing-app.herokuapp.com/api/v1/summary_crossings"
 
 d3.json(border_API_link, function(port_data) {
 
 
-  
-
-  //     // Create Border Graph
-  //     var border_graph_setup = {
-  //       x: VALUE NEEDED,
-  //       y: VALUE NEEDED,
-  //       text: VALUE NEEDED,
-  //       type: 'bar',
-  //       orientation: 'h'
-  //     }
-  
-  //     var border_graph_data = [border_graph_setup]
-  
-  //     var border_graph_layout = {
-  //       title: "TITLE NEEDED",
-  //       barmode: "grouped"
-  //     }
-  
-  
-  //   Plotly.newPlot('border-graph-tag', border_graph_data, border_graph_layout);
-  
-  
   // This function sends the border data to dashboard-leaflet.js for plotting on the map
   sendBordersToLeaflet(port_data)
 })
