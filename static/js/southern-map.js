@@ -487,7 +487,6 @@ function initLineChart () {
         // iterate through the json data and populate objects with appropriate data
         crossingData.forEach(function(crossings_data) {
             var year = crossings_data.year_reported;
-            console.log(`year: ${year}`);
             if (year in years) {
             } else {
                 years.push(year);
@@ -526,7 +525,7 @@ function initLineChart () {
         var allPort_labels = Object.keys(female_fatalities);
         var allPort_female_fatalities = Object.values(female_fatalities);
         var allPort_male_fatalities = Object.values(male_fatalities);
-        var allPort_fatalities = Object.values(total_fatalities);
+        // var allPort_fatalities = Object.values(total_fatalities);
         var allPort_unknown_sex = Object.values(unknown_sex);
     
         // set chart location to variable 
@@ -552,7 +551,7 @@ function initLineChart () {
         };
 
         // create chart
-        const myLineChart = new Chart(ctx, {
+        const LineChart = new Chart(ctx, {
             type: 'line',
             data: {
             labels: allPort_labels,
@@ -654,7 +653,7 @@ function initPieChart () {
         var total_cause_fatalities = Object.values(total_causes);
  
         // create the chart
-        const myPieChart = new Chart(document.getElementById("causeDeath"), {
+        const PieChart = new Chart(document.getElementById("causeDeath"), {
             type: 'pie',
             data: {
             labels: total_cause_labels,
@@ -692,11 +691,6 @@ function optionChanged(value) {
     
     // Assign the value of the dropdown menu option to a variable
     var dataset = this.value;
-
-    // destroy and existing line and pie charts before creating the new charts
-    if(window.myLineChart){ window.myLineChart.destroy(); };
-    if(window.myPieChart){ window.myPieChart.destroy(); };
-    
 
 
     // =============================================================================
@@ -754,99 +748,106 @@ function optionChanged(value) {
             };
         });
         
-        // set the chart location to a variable    
-        var ctx = document.getElementById('fatalities').getContext("2d");
 
-        // construct the colors
-        const colors = {
-            graytone: {
-            fill: 'rgba(220,220,220,1)',
-            stroke: 'rgba(105,105,105,1)',
-            },
-            lightBlue: {
-                stroke: '#6fccdd',
-            },
-            redtone: {
-            fill: 'rgba(240,128,128,1)',
-            stroke: 'rgba(205,92,92,1)',
-            },
-            purpletone: {
-            fill: '#8fa8c8',
-            stroke: '#75539e',
-            },
-        };
+        function newLineChart(lineLabels, maleLines, femaleLines, unknownLines) {
 
-        // set default styling
-        Chart.defaults.global.defaultFontFamily = "Arial";
-        Chart.defaults.global.defaultFontSize = 16; 
+            // set the chart location to a variable    
+            var ctx = document.getElementById('fatalities').getContext("2d");
 
-        // create the new line chart
-        const myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-            labels: years,
-            datasets: [{
-                label: "Male",
-                fill: true,
-                backgroundColor: colors.purpletone.fill,
-                pointBackgroundColor: colors.purpletone.stroke,
-                borderColor: colors.purpletone.stroke,
-                pointHighlightStroke: colors.purpletone.stroke,
-                borderCapStyle: 'butt',
-                data: male_fatalities,
-        
-              }, {
-                label: "Female",
-                fill: true,
-                backgroundColor: colors.redtone.fill,
-                pointBackgroundColor: colors.redtone.stroke,
-                borderColor: colors.redtone.stroke,
-                pointHighlightStroke: colors.redtone.stroke,
-                borderCapStyle: 'butt',
-                data: female_fatalities,
-            }, {
-                label: "Sex Not Determined",
-                fill: true,
-                backgroundColor: colors.graytone.fill,
-                pointBackgroundColor: colors.graytone.stroke,
-                borderColor: colors.graytone.stroke,
-                pointHighlightStroke: colors.graytone.stroke,
-                borderCapStyle: 'butt',
-                data: unknown_sex,
-            }]
-            },
-            options: {
-                responsive: true,
-                // maintainAspectRatio: false,
-                title: {
-                    display: true,
-                    fontFamily: 'Arial',
-                    fontSize: 16,
-                    fontColor: 'darkslategray',
-                    text: ['Migrant Fatalities Nearest to ',port_selected],
-                    // text: 'Migrant Fatalities',
-                    }, 
-                scales: {
-                    yAxes: [{
-                    stacked: true,
-                    scaleLabel: {
+            // construct the colors
+            const colors = {
+                graytone: {
+                fill: 'rgba(220,220,220,1)',
+                stroke: 'rgba(105,105,105,1)',
+                },
+                lightBlue: {
+                    stroke: '#6fccdd',
+                },
+                redtone: {
+                fill: 'rgba(240,128,128,1)',
+                stroke: 'rgba(205,92,92,1)',
+                },
+                purpletone: {
+                fill: '#8fa8c8',
+                stroke: '#75539e',
+                },
+            };
+
+            // set default styling
+            Chart.defaults.global.defaultFontFamily = "Arial";
+            Chart.defaults.global.defaultFontSize = 16; 
+
+            // create the new line chart
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                labels: lineLabels,
+                datasets: [{
+                    label: "Male",
+                    fill: true,
+                    backgroundColor: colors.purpletone.fill,
+                    pointBackgroundColor: colors.purpletone.stroke,
+                    borderColor: colors.purpletone.stroke,
+                    pointHighlightStroke: colors.purpletone.stroke,
+                    borderCapStyle: 'butt',
+                    data: maleLines,
+            
+                }, {
+                    label: "Female",
+                    fill: true,
+                    backgroundColor: colors.redtone.fill,
+                    pointBackgroundColor: colors.redtone.stroke,
+                    borderColor: colors.redtone.stroke,
+                    pointHighlightStroke: colors.redtone.stroke,
+                    borderCapStyle: 'butt',
+                    data: femaleLines,
+                }, {
+                    label: "Sex Not Determined",
+                    fill: true,
+                    backgroundColor: colors.graytone.fill,
+                    pointBackgroundColor: colors.graytone.stroke,
+                    borderColor: colors.graytone.stroke,
+                    pointHighlightStroke: colors.graytone.stroke,
+                    borderCapStyle: 'butt',
+                    data: unknownLines,
+                }]
+                },
+                options: {
+                    responsive: true,
+                    // maintainAspectRatio: false,
+                    title: {
                         display: true,
                         fontFamily: 'Arial',
-                        fontSize: 14,
-                        fontStyle: 'bold',
+                        fontSize: 16,
                         fontColor: 'darkslategray',
-                        labelString: "Deaths per Year"
-                        }   
-                    }]
-                },
-                animation: {
-                    duration: 750,
-                },
-            }
-        });
+                        text: ['Migrant Fatalities Nearest to ',port_selected],
+                        // text: 'Migrant Fatalities',
+                        }, 
+                    scales: {
+                        yAxes: [{
+                        stacked: true,
+                        scaleLabel: {
+                            display: true,
+                            fontFamily: 'Arial',
+                            fontSize: 14,
+                            fontStyle: 'bold',
+                            fontColor: 'darkslategray',
+                            labelString: "Deaths per Year"
+                            }   
+                        }]
+                    },
+                    animation: {
+                        duration: 750,
+                    },
+                }
+            });
+        }
+        document.getElementById("line-chart").innerHTML = '&nbsp;';
+        document.getElementById("line-chart").innerHTML = '<canvas id="fatalities" width="500" height="350"></canvas>'; 
+        window.setTimeout(newLineChart(years, male_fatalities, female_fatalities, unknown_sex), 400);
     });
 
-
+    
     // =============================================================================
     // =============================================================================
     // UPDATE PIE CHART
@@ -866,7 +867,6 @@ function optionChanged(value) {
             if (incident_data.nearest_port_name === dataset) {
                 nearest_port = incident_data.nearest_port_name;
                 var cause = incident_data.cause_of_death_category;
-                console.log(`cause: ${cause}`);
                 
                 if (cause.toLowerCase() in causes) {
                     causes[cause.toLowerCase()] += Number(incident_data.fatalities);
@@ -880,34 +880,37 @@ function optionChanged(value) {
         var cause_labels = Object.keys(causes);
         var cause_fatalities = Object.values(causes);
         
-        
-        // create the new pie chart with data for the selected port
-        const myPieChart = new Chart(document.getElementById("causeDeath"), {
-            type: 'pie',
-            data: {
-            labels: cause_labels,
-            datasets: [{
-                label: "2014-2018 Fatalities", 
-                backgroundColor: ["#B0C4DE", "#3e95cd", "#3cba9f", "#c45850", "#FFD700", "#e8c3b9", "#00FFFF", "#7CFC00", "#8e5ea2", "#FF4500"],
-                data: cause_fatalities
-            }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    fontFamily: 'Arial',
-                    fontSize: 16,
-                    fontColor: 'darkslategray',
-                    text: ['Cause of Death - 2014-2018', nearest_port],
-                }
-            }
-        });
-    });
 
+        function newPieChart(pieLabels, pieFatalities) {
+        // create the new pie chart with data for the selected port
+            new Chart(document.getElementById("causeDeath"), {
+                type: 'pie',
+                data: {
+                labels: pieLabels,
+                datasets: [{
+                    label: "2014-2018 Fatalities", 
+                    backgroundColor: ["#B0C4DE", "#3e95cd", "#3cba9f", "#c45850", "#FFD700", "#e8c3b9", "#00FFFF", "#7CFC00", "#8e5ea2", "#FF4500"],
+                    data: pieFatalities
+                }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        fontFamily: 'Arial',
+                        fontSize: 16,
+                        fontColor: 'darkslategray',
+                        text: ['Cause of Death - 2014-2018', nearest_port],
+                    }
+                }
+            });
+        }
+        document.getElementById("pie-chart").innerHTML = '&nbsp;';
+        document.getElementById("pie-chart").innerHTML = '<canvas id="causeDeath" width="500" height="350"></canvas>'; 
+        window.setTimeout(newPieChart(cause_labels, cause_fatalities), 400);
+    });
 };
 
 // initialize charts on page load or refresh
 initLineChart();
 initPieChart();
-
