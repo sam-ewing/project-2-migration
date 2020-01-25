@@ -111,6 +111,8 @@
 }
 
 
+
+
 /* SOUTHERN BORDER MAP PAGE ONLY */
 
 #southern-map-container {
@@ -129,4 +131,22 @@
 
 .map_legend {
     background-color: white;
+}
+
+.well-color {
+    align-self: auto;
+    background-color: darkslategray;
+    text-align: center;
+}
+.well-text {
+    font-size: 20px;
+    color: white;
+}
+#selDataset {
+    font-size: 11px;
+    background-color: lightgray;
+    color:black
+}
+.instruction-text {
+    font-size: 12px
 }

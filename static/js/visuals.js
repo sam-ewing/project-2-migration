@@ -1,3 +1,102 @@
+//Handle changes to dropdown
+function optionChanged(id) {
+
+  // Create summary crossing info
+
+    d3.json("https://migrant-crossing-app.herokuapp.com/api/v1/summary_crossings",function(data) {
+      console.log(id)
+      var port_matches = data.filter(s => s.port_name.toString() === id)
+      console.log(port_matches)
+
+      port_years = []
+      port_pops = []
+
+      for (index = 0; index < port_matches.length; index ++) {
+          var year_index = port_matches[index]
+          var port_year = year_index.year_reported
+          var port_pop = year_index.pedestrian_x
+          port_years.push(port_year)
+          port_pops.push(port_pop)
+      }
+    
+      console.log(port_years)
+      console.log(port_pops)
+
+      var trace2 = {
+        x: port_years,
+        y: port_pops,
+        type: "line"
+      };
+      
+      var data = [trace2];
+      
+      var layout = {
+        title: `Pedestrian Port Crossing for ${id}`,
+        xaxis: {
+          title: "Year"
+        },
+        yaxis: {
+          title: "Number of Pedestrian Crossings"
+        },
+        width: 400
+      };
+      
+      Plotly.newPlot("border-graph-tag", data, layout);
+
+  })
+
+  // Create migrant incident data
+  d3.json("https://migrant-crossing-app.herokuapp.com/api/v1/migrant_incidents",function(myData) {
+    console.log(id)
+    var incident_matches = myData.filter(s => s.nearest_port_name.toString() === id)
+    console.log(incident_matches)
+
+    var result = [];
+    incident_matches.reduce(function(res, value) {
+      if (!res[value.year_reported]) {
+        res[value.year_reported] = {year_reported: value.year_reported, casualties: 0};
+        result.push(res[value.year_reported])
+      }
+      res[value.year_reported].casualties += value.casualties;
+      return res;
+    }, {});
+    
+    incidents_year = []
+    incidents_cas = []
+
+    console.log("Incident Year", incidents_year)
+    console.log("Incident Cas", incidents_cas)
+
+    for (y = 0; y < result.length; y++) {
+      y_index = result[y]
+      y_year = y_index.year_reported
+      y_cas = y_index.casualties
+      incidents_year.push(y_year)
+      incidents_cas.push(y_cas)
+    }
+
+    var trace1 = {
+      x: incidents_year,
+      y: incidents_cas,
+      type: "bar"
+    };
+    
+    var data1 = [trace1];
+    
+    var layout1 = {
+      title: `Migrant Casualties By Nearest Port of ${id}`,
+      xaxis: {
+        title: "Year"
+      },
+      yaxis: {
+        title: "Casualties"
+      }
+    };
+    
+    Plotly.newPlot("migrant-graph-tag", data1, layout1);
+
+})
+}
 
 // JSON test file '../../static/test-data/migrant_incidents_date_fix.json'
 var migrant_API_link = "https://migrant-crossing-app.herokuapp.com/api/v1/migrant_incidents"
@@ -69,13 +168,12 @@ d3.json(migrant_API_link, function(incident_data) {
     var selected_port_coords = port_coord_organizer[port_index_val+1]
     console.log("coords for port:", selected_port_coords)
 
-  
+    // Handler event
+    optionChanged(selected_Port)
 
   }
  
-  
 
-  
 })
 
 d3.json(migrant_API_link, function(incident_data) {
@@ -98,6 +196,50 @@ d3.json(border_API_link, function(port_data) {
   sendBordersToLeaflet(port_data)
 })
 
+//Init page with default data 
+function init() {
+  var trace2 = {
+    x: [2014,2015,2016,2017,2018],
+    y: [3447437, 3542190, 3573992, 3016801, 3701135],
+    type: "line"
+  };
+  
+  var data = [trace2];
+  
+  var layout = {
+    title: "Pedestrian Port Crossing for Laredo",
+    xaxis: {
+      title: "Year"
+    },
+    yaxis: {
+      title: "Number of Pedestrian Crossings"
+    },
+    width: 400
+  };
+  
+  Plotly.newPlot("border-graph-tag", data, layout);
+}
 
+var trace1 = {
+  x: [2015,2016,2017,2018,2019],
+  y: [19,107,88,74,4],
+  type: "bar"
+};
+
+var data1 = [trace1];
+
+var layout1 = {
+  title: "Migrant Casualties By Nearest Port of Laredo",
+  xaxis: {
+    title: "Year"
+  },
+  yaxis: {
+    title: "Casualties"
+  }
+};
+
+Plotly.newPlot("migrant-graph-tag", data1, layout1);
+
+init();
 
 

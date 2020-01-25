@@ -85,35 +85,36 @@
 
         <div class="row">
 
-          <div class="col-md-12">
+          <div class="col-md-7">
             <div id="graph-container">
               <div id="migrant-graph-tag">
-                <h1 style="text-align: center;">Bubble Graph Here (remove this text when ready for JS)</h1>
+                <canvas id="ports" width="400" height="300"></canvas>
+                <!-- <h1 style="text-align: center;">Migrant graph here (remove this text when ready for JS)</h1> -->
               </div>
             </div>
           </div>
 
-          
-        </div> <!--Div closing "Row"-->
-
-        <br/>
-
-        <div class="row">
-
-          <div class="col-md-6">
-            <div id="graph-container">
-              <div id="migrant-graph-tag">
-                <h1 style="text-align: center;">Migrant graph here (remove this text when ready for JS)</h1>
-              </div>
+          <div class="col-md-4">
+            <br/>
+            
+            <div class="well" id="well-color">
+              <h5 id="well-text">Select a Port of Entry</h5>
+              <br/>
+              <select id="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
-          </div>
+            
+            <br/>
+            
+            <p class="instruction-text">Hover over a bubble on the chart to the left to discover which ports of entry are in the most dangerous areas in terms of nearby migrant fatalities.  Larger bubbles indicate more migrant incidents and bubbles higher on the chart indicate more deaths per month.</p>
+            <p class="instruction-text">Then, use the dropdown menu above to select a port to drill down into fatality trends and cause-of-death as shown in the charts below.</pclass="instruction">
 
-          <div class="col-md-6">
+          </div>
+         
+          <div class="col-md-1">
             
             <div id="graph-container">
               <div id="border-graph-tag">
-                <!-- Append Border graph here -->
-                <h1 style="text-align: center;">Border graph here (remove this text when ready for JS)</h1>
+                
               </div>
             </div>
 
@@ -122,45 +123,27 @@
         
         <br/>
 
+        <hr/>
+
         <div class="row">
 
-          <div class="col-md-3">
+          <div class="col-md-6">
             <div id="graph-container">
-              <div id="migrant-graph-tag">
-                <h1 style="text-align: center;">Migrant graph here (remove this text when ready for JS)</h1>
+              <div id="line-chart">
+                <canvas id="fatalities" width="500" height="350"></canvas>
+                <!-- <h1 style="text-align: center;">Migrant graph here (remove this text when ready for JS)</h1> -->
               </div>
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-6">
             <div id="graph-container">
-              <div id="migrant-graph-tag">
-                <h1 style="text-align: center;">Migrant graph here (remove this text when ready for JS)</h1>
+              <div id="pie-chart">
+                <canvas id="causeDeath" width="500" height="350"></canvas>
               </div>
             </div>
           </div>
 
-          <div class="col-md-3">
-            
-            <div id="graph-container">
-              <div id="border-graph-tag">
-                <!-- Append Border graph here -->
-                <h1 style="text-align: center;">Border graph here (remove this text when ready for JS)</h1>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-md-3">
-            
-            <div id="graph-container">
-              <div id="border-graph-tag">
-                <!-- Append Border graph here -->
-                <h1 style="text-align: center;">Border graph here (remove this text when ready for JS)</h1>
-              </div>
-            </div>
-
-          </div>
           
         </div> <!--Div closing "Row"-->
         <br/>
@@ -192,9 +175,12 @@
 <!-- Leaflet.JS Script -->
 <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
 <!-- D3.JS script -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
 
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script> -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
 
+<!-- chartjs Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <!------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------->
 
@@ -204,7 +190,7 @@
 <script type="text/javascript" src="static/js/map-config.js"></script>
 
 <!-- southern-map.js - Powers maps, graphs and D3 selections-->
-<!-- <script type="text/javascript" src="static/js/southern-map.js"></script> -->
+<script type="text/javascript" src="static/js/southern-map.js"></script>
 
 
 </body>

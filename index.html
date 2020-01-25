@@ -20,6 +20,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
      
+    <!---Plotly Scripts -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 </head>
 
 <body>
@@ -63,8 +66,25 @@
           <br/>
         </div>
 
+      
+
         <br/>
-        
+
+        <div class="row">
+          <div class="col-md-12">
+            <div id="map-container">
+              <div id="map-tag">
+                <!-- Append Map here -->
+                <iframe id="i-frame" src="dashboard-leaflet.html"></iframe>
+              </div>
+            </div>
+            <br/>
+            <h3 id="subheaders"><a href="dashboard-leaflet.html" target="_blank">See a larger version of this map here.</a></h3>
+          </div>
+        </div>
+
+        <br/>
+
         <!-- YEAR SELECTION WELL -->
         <div class="row">
           <div class="col-md-2">
@@ -87,7 +107,7 @@
             <div id="graph-container">
               <div id="migrant-graph-tag">
                 <!-- Append Migrant graph here -->
-                <h1 style="text-align: center;">Migrant graph here (remove this text when ready for JS)</h1>
+                
               </div>
             </div>
 
@@ -98,29 +118,13 @@
             <div id="graph-container">
               <div id="border-graph-tag">
                 <!-- Append Border graph here -->
-                <h1 style="text-align: center;">Border graph here (remove this text when ready for JS)</h1>
+                
               </div>
             </div>
 
           </div>
 
         </div>
-
-        <br/>
-
-        <div class="row">
-          <div class="col-md-12">
-            <div id="map-container">
-              <div id="map-tag">
-                <!-- Append Map here -->
-                <iframe id="i-frame" src="dashboard-leaflet.html"></iframe>
-              </div>
-            </div>
-            <br/>
-            <h3 id="subheaders"><a href="dashboard-leaflet.html" target="_blank">See a larger version of this map here.</a></h3>
-          </div>
-        </div>
-
         <br/>
         
         <!-- ABOUT SECTION -->
@@ -153,7 +157,7 @@
                 </div>
                   <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#acc-menu">
                     <div class="card-body">
-                      <p id="card-descriptive-text">Both datasets are retrieved from Kaggle (see right for more information) and are loaded into Python for processing. The Pandas library is used to load the .csv files into dataframes for refinement. Null-values and missing datapoints are dropped (when determined to be appropriate) and data is organized and adapted to easier use in SQL. The Haversine library is used to identify the closest border port to each incident and saved for plotting purposes. Once the datasets are refined, they are broken down into smaller datasets that can be joined or merged in a SQL database. These smaller datasets are output by Pandas as .csv files for loading into PostgreSQL.</p>
+                      <p id="card-descriptive-text">Both datasets are retrieved from Kaggle (see right for more information) and are loaded into Python for processing. The Pandas library is used to load the .csv files into dataframes for refinement. Null-values and missing datapoints are dropped (when determined to be appropriate) and data is organized and adapted to easier use in SQL. The Haversine library is used to identify the nearest port of entry to each incident ("as the crow flies") and saved for plotting purposes. Once the datasets are refined, they are broken down into smaller datasets that can be joined or merged in a SQL database. These smaller datasets are output by Pandas as .csv files for loading into PostgreSQL.</p>
                     </div>
                   </div>
                 </div>
@@ -170,7 +174,9 @@
                 </div>
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#acc-menu">
                     <div class="card-body">
-                      <p class="card-text" id="card-descriptive-text">Each of the .csv outputs created by the Python script are imported into PostgreSQL's PGAdmin4 for storage and viewing. Each .csv is loaded into its own table in PGAdmin4 so that it can be viewed individually or joined with the other tables.</p>
+                      <p class="card-text" id="card-descriptive-text">Each of the .csv outputs created by the Python script are imported into a 3rd Normal Form PostgreSQL database using PGAdmin4 for storage and queries. Each .csv is loaded into its own table in PGAdmin4, so that it can be queried individually or joined with the other tables.</p>
+                      <br/>
+                      <p class="card-text" id="card-descriptive-text">Once the data is placed into SQL, a new set of de-normalized tables are created in preparation for API use. This involves grouping data for summary tables, deriving additional column variables, and populating new columns mapped to 3NF codes with corresponding descriptive values. These de-normalized summary tables are exported to a .sqlite file in preparation for use in a Python Flask server.</p>
                     </div>
                   </div>
                 </div>
@@ -190,7 +196,7 @@
                       <p class="card-text" id="card-descriptive-text">In order to make sure our data is accessible through the web, we created an application that hosts data APIs for our front-end visualizations to consume.</p>
                         <br>
                         <p class="card-text" id="card-descriptive-text">To create our API, we had to use Python in order to query the PostgreSQL database created in the previous step. We used an Object-Relational Mapper (ORM) called psycopg2 in order to do this.</p> 
-                        <p class="card-text" id="card-descriptive-text">To stage our Postgres data, we created two denormalized tables that joined essential information about border ports and migrant incidents. Despite having originally converted our data to the Third Normal-Form (3NF) for use in PostgreSQL, we determined that our API would be easier to utilize with data in a denormalized state.</p> 
+                        <p class="card-text" id="card-descriptive-text">To stage our Postgres data, we created 2 denormalized tables that joined essential information about ports and migrant incidents (refer to Part 2 for more).</p>
                         <br>
                         <p class="card-text" id="card-descriptive-text">After we created these tables on a local database, we used Heroku to host the database online. In order for Heroku to interface with our database correctly, we used the Heroku Postgres add-on during the creation of our Heroku server. The end result of this process is a production database that can drive the data for our Flask application.</p>
                         <br>
@@ -203,6 +209,8 @@
                         <br>
                         <p class="card-text" id="card-descriptive-text">Hosting the app on Heroku required a full deployment, along with the installation of necessary resources on the server side.</p>
                         </p>
+
+                        <img src='api-diagram.png' style="width: 100%;">
                     </div>
                   </div>
                 </div>
