@@ -844,7 +844,7 @@ function optionChanged(value) {
         }
         document.getElementById("line-chart").innerHTML = '&nbsp;';
         document.getElementById("line-chart").innerHTML = '<canvas id="fatalities" width="500" height="350"></canvas>'; 
-        window.setTimeout(newLineChart(years, male_fatalities, female_fatalities, unknown_sex), 400);
+        window.setTimeout(newLineChart(years, male_fatalities, female_fatalities, unknown_sex), 500);
     });
 
     
@@ -907,7 +907,7 @@ function optionChanged(value) {
         }
         document.getElementById("pie-chart").innerHTML = '&nbsp;';
         document.getElementById("pie-chart").innerHTML = '<canvas id="causeDeath" width="500" height="350"></canvas>'; 
-        window.setTimeout(newPieChart(cause_labels, cause_fatalities), 400);
+        window.setTimeout(newPieChart(cause_labels, cause_fatalities), 500);
     });
 };
 
