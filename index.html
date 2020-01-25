@@ -262,7 +262,15 @@
                   </div>
                   <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#acc-menu">
                     <div class="card-body">
-                      <p class="card-text" id="card-descriptive-text">An API Call is made to the API created in the previous step, and the data retrieved is used throughout our website to build graphs and create interactive maps. </p>
+                      <p class="card-text" id="card-descriptive-text">API calls are made to the heroku host and the data retrieved is used throughout our website to build charts and create interactive maps. We used two libraries to produce the charts. The charts on the home page (above) were created using Plotly. The charts on the "Southern Border Map" page were generated using <a href="https://www.chartjs.org/" target="_blank">chartjs</a>. Each collection of charts is described as follows.</p>
+                      <br/>
+                      <h3>Plotly - Charts on the Dashboard</h3>
+                      <hr/>
+                      <p class="card-text" id="card-descriptive-text">There are two <strong>Plotly</strong> charts displaying: year-by-year trends for (1) migrant casualties (bar chart) and (2) pedestrian crossings (line chart). The charts compliment the Leaflet map view on the home page which enables the user to examine migrant incident volume and location by year. Each chart updates interactively to show information for specific ports of entry as selected from the drop down menu.</p>
+                      <br/>
+                      <h3>Chartjs - Charts on the Southern Border Map Page</h3>
+                      <hr/>
+                      <p class="card-text" id="card-descriptive-text">There are three charts created using <strong>Chartjs</strong> displaying: (1) migrant fatalities/incidents relative to different port and their respective pedestrian crossing volume (bubble chart), (2) migrant fatalities trend by year and sex (stacked line chart), and (3) cause-of-death (pie chart). All the charts are intended to compliment the Leaflet map on the same page which allows the user to explore areas around the ports to assess the volume of migrant incidents. The bubble chart is static, but provides a high-level perspective to see which ports are located in areas that appear to be more (or less) dangerous to migrants. The stacked line and pie charts refresh interactively with the port selected in the drop down menu, thereby enabling the user to drill down into the trends.</p>
                       
                     </div>
                   </div>
