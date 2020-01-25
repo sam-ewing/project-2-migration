@@ -174,9 +174,9 @@
                 </div>
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#acc-menu">
                     <div class="card-body">
-                      <p class="card-text" id="card-descriptive-text">Each of the .csv outputs created by the Python script are imported into a 3rd Normal Form PostgreSQL database using PGAdmin4 for storage and queries. Each .csv is loaded into its own table in PGAdmin4, so that it can be queried individually or joined with the other tables.</p>
+                      <p class="card-text" id="card-descriptive-text">Each of the .csv outputs created by the Python script are imported into a Third Normal Form (3NF) PostgreSQL database using PGAdmin4 for storage and queries. Each .csv is loaded into its own table in PGAdmin4, so that it can be queried individually or joined with the other tables.</p>
                       <br/>
-                      <p class="card-text" id="card-descriptive-text">Once the data is placed into SQL, a new set of de-normalized tables are created in preparation for API use. This involves grouping data for summary tables, deriving additional column variables, and populating new columns mapped to 3NF codes with corresponding descriptive values. These de-normalized summary tables are exported to a .sqlite file in preparation for use in a Python Flask server.</p>
+                      <p class="card-text" id="card-descriptive-text">Once the data is placed into SQL, a new set of de-normalized tables are created in preparation for API use. This involves grouping data for summary tables, deriving additional column variables, and populating new columns mapped to 3NF codes with corresponding descriptive values. These de-normalized summary tables are then referenced by the Python Flask application detailed in section 3.</p>
                     </div>
                   </div>
                 </div>
@@ -196,7 +196,7 @@
                       <p class="card-text" id="card-descriptive-text">In order to make sure our data is accessible through the web, we created an application that hosts data APIs for our front-end visualizations to consume.</p>
                         <br>
                         <p class="card-text" id="card-descriptive-text">To create our API, we had to use Python in order to query the PostgreSQL database created in the previous step. We used an Object-Relational Mapper (ORM) called psycopg2 in order to do this.</p> 
-                        <p class="card-text" id="card-descriptive-text">To stage our Postgres data, we created 2 denormalized tables that joined essential information about ports and migrant incidents (refer to Part 2 for more).</p>
+                        <p class="card-text" id="card-descriptive-text">To stage our Postgres data, we created 2 denormalized tables that joined essential information about ports and migrant incidents (refer to section 2 for more information).</p>
                         <br>
                         <p class="card-text" id="card-descriptive-text">After we created these tables on a local database, we used Heroku to host the database online. In order for Heroku to interface with our database correctly, we used the Heroku Postgres add-on during the creation of our Heroku server. The end result of this process is a production database that can drive the data for our Flask application.</p>
                         <br>
@@ -255,7 +255,7 @@
                     <div class="card-header" id="headingFive">
                       <h2 class="mb-0">
                         <button class="btn btn-link collapsed" id="accordion-header-format" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFour">
-                          5) Creating Our Graphs and Charts
+                          5) Creating Our Charts
                         </button>
                       </h2>
                     </div>
