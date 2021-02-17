@@ -2,15 +2,18 @@
 var map_center_lat = 31.763441
 var map_center_long = -106.504839
 
-// Create street tile layer  
-var border_street_layer = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+// Create street tile layer (REVISED FEB 17, 2021 - MIGRATING TO MAPBOX'S NEW API - SE) 
+var border_street_layer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
 attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+tileSize: 512,
 maxZoom: 18,
-id: "mapbox.streets",
+zoomOffset: -1,
+id: "mapbox/streets-v11",
 accessToken: mapbox_api_key
 });
+// END OF REVISIONS 
 
-// Create satellite tile layer  
+// Create satellite tile layer
 var border_sat_layer = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
 attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
 maxZoom: 18,
